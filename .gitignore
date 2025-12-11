@@ -1,0 +1,40 @@
+# Environment variables
+.env
+
+# Vendor directory (composer dependencies)
+vendor/
+
+# Logs
+logs/*.log
+*.log
+
+# Uploaded files
+assets/uploads/*
+!assets/uploads/.gitkeep
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.bak
+*.cache
+
+# Database dumps
+*.sql.gz
+*.sql.zip
+
+# Session files
+sessions/
+tmp/
+
+# Cache
+cache/

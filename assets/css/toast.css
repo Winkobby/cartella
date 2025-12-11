@@ -1,0 +1,206 @@
+/* Modern Toast Notification System */
+.toast-container {
+    position: fixed;
+    top: 24px;
+    right: 20px;
+    z-index: 99999;
+    max-width: 400px;
+}
+
+.toast {
+    background: white;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    backdrop-filter: blur(10px);
+    border-left: 4px solid var(--primary-color);
+    margin-bottom: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(400px);
+    opacity: 0;
+}
+
+.toast.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.toast.hide {
+    transform: translateX(400px);
+    opacity: 0;
+}
+
+.toast-header {
+    background: transparent;
+    border: none;
+    padding: 12px 16px 8px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 40px;
+}
+
+.toast-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    flex: 1;
+}
+
+.toast-title i {
+    font-size: 1.1rem;
+}
+
+.toast-success .toast-header {
+    color: #10b981;
+}
+
+.toast-error .toast-header {
+    color: #ef4444;
+}
+
+.toast-warning .toast-header {
+    color: #f59e0b;
+}
+
+.toast-info .toast-header {
+    color: #3b82f6;
+}
+
+.toast-body {
+    padding: 0 16px 16px;
+    color: #6b7280;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    margin-top: -4px;
+}
+
+.btn-close {
+    padding: 4px;
+    background-size: 0.8rem;
+.btn-close {
+     /* Ensure a visible, accessible close control for toasts.
+         Use a small SVG background where available and a text fallback
+         so the button remains visible even if global styles are not loaded. */
+     padding: 4px;
+     background-size: 1em;
+     opacity: 0.9;
+     transition: opacity 0.15s ease;
+     margin-left: auto;
+     margin-right: 0;
+     order: 2;
+     box-sizing: content-box;
+     width: 1.25rem;
+     height: 1.25rem;
+     display: inline-flex;
+     align-items: center;
+     justify-content: center;
+     border: none;
+     border-radius: 0.375rem;
+     background-color: transparent;
+     color: #111827;
+     font-weight: 600;
+}
+
+/* Textual fallback (visible if background image isn't applied) */
+.btn-close::before {
+     content: '✕';
+     font-size: 0.95rem;
+     line-height: 1;
+     display: inline-block;
+     color: currentColor;
+}
+
+.btn-close:hover {
+     opacity: 1;
+}
+
+/* Provide a compact SVG cross as a background so the button matches the site's iconography.
+    This mirrors the SVG used in the main stylesheet but ensures the toast's close is visible
+    even on pages that don't include the global stylesheet. */
+.btn-close {
+     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e");
+     background-repeat: no-repeat;
+     background-position: center;
+     background-size: 0.9em;
+}
+    opacity: 0.6;
+    transition: opacity 0.2s;
+    margin-left: auto;
+    margin-right: 0;
+    order: 2;
+    color: #6b7280; 
+}
+
+.btn-close:hover {
+    opacity: 1;
+}
+
+/* Progress Bar */
+.toast-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), #8b5cf6);
+    border-radius: 0 0 0 8px;
+    transition: width 0.1s linear;
+}
+
+/* Toast Types */
+.toast-success {
+    border-left-color: #10b981;
+}
+
+.toast-success .toast-progress {
+    background: linear-gradient(90deg, #10b981, #34d399);
+}
+
+.toast-error {
+    border-left-color: #ef4444;
+}
+
+.toast-error .toast-progress {
+    background: linear-gradient(90deg, #ef4444, #f87171);
+}
+
+.toast-warning {
+    border-left-color: #f59e0b;
+}
+
+.toast-warning .toast-progress {
+    background: linear-gradient(90deg, #f59e0b, #fbbf24);
+}
+
+.toast-info {
+    border-left-color: #3b82f6;
+}
+
+.toast-info .toast-progress {
+    background: linear-gradient(90deg, #3b82f6, #60a5fa);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .toast-container {
+        top: 20px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+    
+    .toast {
+        margin-bottom: 8px;
+    }
+    
+    .toast-header {
+        padding: 10px 12px 6px;
+    }
+    
+    .toast-body {
+        padding: 0 12px 12px;
+    }
+}

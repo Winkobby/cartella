@@ -1,0 +1,26 @@
+RewriteEngine On
+
+# Redirect to login.php when accessing /auth/login
+RewriteRule ^auth/login$ login.php [L]
+
+# Redirect to register.php when accessing /auth/register  
+RewriteRule ^auth/register$ register.php [L]
+
+# Redirect clean product URLs: /product/8 to product.php?id=8
+RewriteRule ^product/([0-9]+)/?$ product.php?id=$1 [L,QSA]
+
+# Redirect /products/category-name to products.php?category=slug (optional)
+RewriteRule ^products/([a-zA-Z0-9-]+)/?$ products.php?category=$1 [L,QSA]
+
+# Ensure these files are accessible
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Clean up corrupted product URLs
+RewriteCond %{QUERY_STRING} Warning: [NC]
+RewriteCond %{QUERY_STRING} category= [NC]
+RewriteRule ^products\.php$ /cartmate/products.php?category=all [L,R=301]
+
+RewriteCond %{QUERY_STRING} Array-to-string [NC]
+RewriteCond %{QUERY_STRING} category= [NC]
+RewriteRule ^products\.php$ /cartmate/products.php?category=all [L,R=301]

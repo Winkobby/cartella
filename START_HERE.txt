@@ -1,0 +1,111 @@
+# 🚀 QUICK START GUIDE - Notification Preferences Feature
+
+## In 3 Simple Steps:
+
+### Step 1️⃣: Initialize the Database
+Visit this link in your browser:
+```
+http://localhost/cartmate/database/init_notification_preferences.php
+```
+You should see: **✓ Notification Preferences Table Created Successfully**
+
+### Step 2️⃣: Verify Everything is Set Up
+Visit this link to check everything:
+```
+http://localhost/cartmate/verify_setup.php
+```
+All items should show ✓ green checkmarks
+
+### Step 3️⃣: Start Using the Feature
+1. Log in to your CartMate account
+2. Click **"Notifications & Preferences"** in the sidebar
+3. Toggle your preferences
+4. Changes save automatically!
+
+---
+
+## Testing the Feature
+
+### Option A: Quick Test (Recommended)
+1. Go to account.php while logged in
+2. Click "Notifications & Preferences"
+3. Toggle a preference
+4. Refresh the page - preference should still be set ✓
+
+### Option B: Technical Test
+Visit: `http://localhost/cartmate/test_ajax_preferences.php`
+- Click "Test GET Preferences" button
+- Should see JSON response with your preferences
+
+### Option C: Troubleshooting
+Visit: `http://localhost/cartmate/verify_setup.php`
+- Shows database status
+- Shows AJAX file status
+- Shows all system components
+
+---
+
+## What Each Preference Does
+
+| Preference | When You'll Get Notifications |
+|---|---|
+| 🆕 **New Products** | When new items are added to the store |
+| ⭐ **Featured Products** | When products are featured/highlighted |
+| 🏷️ **Sales & Promotions** | When discounts and sales start |
+| 📢 **Important News** | Breaking announcements about your orders/account |
+| 📦 **Order Updates** | When your order ships, arrives, etc. |
+| 📧 **Newsletter** | Weekly/monthly emails about the store |
+| ⭐ **Product Reviews** | When customers review products |
+
+---
+
+## 🔧 If Something Isn't Working
+
+### Problem: "Not authenticated" error
+**Solution**: Make sure you're logged in to your account
+
+### Problem: Getting HTML error instead of JSON
+**Solution**: 
+1. Run the database initialization script
+2. Check that the table was created: http://localhost/cartmate/verify_setup.php
+
+### Problem: Preferences don't save
+**Solution**:
+1. Open browser Developer Tools (F12)
+2. Go to Network tab
+3. Click a preference toggle
+4. Check if the request shows 200 status code
+5. Check the Response tab for JSON output
+
+### Problem: Still having issues?
+**Debug with**: http://localhost/cartmate/test_ajax_preferences.php
+
+---
+
+## 📊 Files Involved
+
+| File | Purpose |
+|---|---|
+| `/ajax/preferences.php` | Backend that handles preference updates |
+| `/account.php` | Frontend with toggle switches |
+| `user_notification_preferences` | Database table |
+| `/database/init_notification_preferences.php` | Creates the database table |
+
+---
+
+## ✅ Success Criteria
+
+You'll know it's working when:
+- ✓ Database table was created without errors
+- ✓ You see the "Notifications & Preferences" tab in account.php
+- ✓ Toggling a preference shows a success message
+- ✓ Refreshing the page keeps your preferences selected
+- ✓ The AJAX test page returns valid JSON
+
+---
+
+## 🎉 Done!
+
+The feature is complete and ready to use. Customers can now control their notification preferences directly from their account!
+
+**Questions?** Check the detailed documentation in `FEATURE_STATUS.md`

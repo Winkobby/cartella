@@ -1,0 +1,8 @@
+To: test@example.com
+Subject: Test Email from Cartella
+MIME-Version: 1.0
+Content-type: text/html; charset=UTF-8
+From: Cartella <kampusgig@gmail.com>
+Reply-To: kampusgig@gmail.com
+
+<h1>Test Email</h1><p>This is a test email sent at 2025-11-26 15:42:47</p>
