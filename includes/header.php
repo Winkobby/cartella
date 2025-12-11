@@ -26,7 +26,7 @@ $categories = $functions->getAllCategories();
 $active_coupon = null;
 try {
   $pdo = $database->getConnection();
-$stmt = $pdo->prepare("SELECT * FROM coupons WHERE status = 'active' AND start_date <= NOW() AND end_date >= NOW() ORDER BY end_date ASC LIMIT 1");  $stmt->execute();
+  $stmt = $pdo->prepare("SELECT * FROM coupons WHERE is_active = 1 AND start_date <= NOW() AND end_date >= NOW() ORDER BY end_date ASC LIMIT 1");
   $active_coupon = $stmt->fetch(PDO::FETCH_ASSOC);
 } catch (Exception $e) {
   error_log('Error fetching active coupon for promo modal: ' . $e->getMessage());
