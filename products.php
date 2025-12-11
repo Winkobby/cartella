@@ -1254,7 +1254,7 @@ function getCategoryIconColor($categoryName)
                         <!-- ALL PRODUCTS - Always show as default -->
                         <li>
                             <a href="products.php"
-                                class="block rounded text-xs py-1.5 px-2
+                                class="block rounded text-xs px-2
                                 <?php echo ($category === 'all' || !isset($_GET['category'])) ?
                                     'text-purple-600 font-medium' :
                                     'text-gray-700 hover:text-purple-700'; ?>">
@@ -1269,7 +1269,7 @@ function getCategoryIconColor($categoryName)
                         <?php foreach ($categories as $cat): ?>
                             <li>
                                 <a href="products.php?category=<?php echo $cat['slug']; ?>"
-                                    class="block rounded text-sm py-1.5 px-2
+                                    class="block rounded text-sm  px-2
                                     <?php echo ($category == $cat['slug'] || $category == $cat['category_id']) ?
                                         'text-purple-600 font-medium' :
                                         'text-gray-700 hover:text-purple-700'; ?>">

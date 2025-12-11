@@ -1114,38 +1114,52 @@ async function performAjaxAction(action, data) {
 
 // Coupon Actions
 async function toggleCouponStatus(couponId, currentStatus) {
-    if (!confirm(`Are you sure you want to ${currentStatus ? 'deactivate' : 'activate'} this coupon?`)) {
-        return;
-    }
-    
-    const result = await performAjaxAction('update_coupon_status', {
-        coupon_id: couponId,
-        is_active: currentStatus ? 0 : 1
+    const title = currentStatus ? 'Deactivate Coupon' : 'Activate Coupon';
+    const message = currentStatus
+        ? 'Are you sure you want to deactivate this coupon?'
+        : 'Are you sure you want to activate this coupon?';
+
+    showConfirmationModal(title, message, async () => {
+        const result = await performAjaxAction('update_coupon_status', {
+            coupon_id: couponId,
+            is_active: currentStatus ? 0 : 1
+        });
+
+        if (result.success) {
+            showNotification(result.message, 'success');
+            setTimeout(() => window.location.reload(), 800);
+        } else {
+            showNotification(result.message, 'error');
+        }
+    }, {
+        type: currentStatus ? 'warning' : 'success',
+        confirmText: currentStatus ? 'Deactivate' : 'Activate',
+        cancelText: 'Cancel'
     });
-    
-    if (result.success) {
-        showNotification(result.message, 'success');
-        setTimeout(() => window.location.reload(), 1000);
-    } else {
-        showNotification(result.message, 'error');
-    }
 }
 
 async function deleteCoupon(couponId) {
-    if (!confirm('Are you sure you want to delete this coupon? This action cannot be undone.')) {
-        return;
-    }
-    
-    const result = await performAjaxAction('delete_coupon', {
-        coupon_id: couponId
-    });
-    
-    if (result.success) {
-        showNotification(result.message, 'success');
-        setTimeout(() => window.location.reload(), 1000);
-    } else {
-        showNotification(result.message, 'error');
-    }
+    showConfirmationModal(
+        'Delete Coupon',
+        'Are you sure you want to delete this coupon? This action cannot be undone.',
+        async () => {
+            const result = await performAjaxAction('delete_coupon', {
+                coupon_id: couponId
+            });
+
+            if (result.success) {
+                showNotification(result.message, 'success');
+                setTimeout(() => window.location.reload(), 800);
+            } else {
+                showNotification(result.message, 'error');
+            }
+        },
+        {
+            type: 'error',
+            confirmText: 'Delete',
+            cancelText: 'Cancel'
+        }
+    );
 }
 
 async function submitCreateCoupon(event) {
@@ -1182,15 +1196,28 @@ async function submitCreateCoupon(event) {
 
 // Utility Functions
 function showNotification(message, type = 'info') {
-    // Remove existing notifications
+    // Prefer global toast system from admin_header
+    try {
+        if (window.toast && typeof window.toast[type] === 'function') {
+            window.toast[type](message);
+            return;
+        }
+        if (window.toast && typeof window.toast.show === 'function') {
+            window.toast.show(message, type);
+            return;
+        }
+    } catch (e) {
+        console.error('Toast error:', e);
+    }
+
+    // Fallback notification
     const existingNotifications = document.querySelectorAll('.notification');
     existingNotifications.forEach(notification => notification.remove());
-    
-    // Create notification
+
     const notification = document.createElement('div');
     notification.className = `notification fixed top-4 right-4 z-50 px-4 py-3 rounded-lg shadow-lg ${
-        type === 'success' ? 'bg-green-500 text-white' : 
-        type === 'error' ? 'bg-red-500 text-white' : 
+        type === 'success' ? 'bg-green-500 text-white' :
+        type === 'error' ? 'bg-red-500 text-white' :
         'bg-blue-500 text-white'
     }`;
     notification.innerHTML = `
@@ -1203,10 +1230,8 @@ function showNotification(message, type = 'info') {
             <span>${message}</span>
         </div>
     `;
-    
+
     document.body.appendChild(notification);
-    
-    // Remove after 3 seconds
     setTimeout(() => notification.remove(), 3000);
 }
 

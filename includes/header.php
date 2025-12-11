@@ -26,8 +26,7 @@ $categories = $functions->getAllCategories();
 $active_coupon = null;
 try {
   $pdo = $database->getConnection();
-  $stmt = $pdo->prepare("SELECT * FROM coupons WHERE status = 'active' AND start_date <= NOW() AND end_date >= NOW() ORDER BY end_date ASC LIMIT 1");
-  $stmt->execute();
+$stmt = $pdo->prepare("SELECT * FROM coupons WHERE status = 'active' AND start_date <= NOW() AND end_date >= NOW() ORDER BY end_date ASC LIMIT 1");  $stmt->execute();
   $active_coupon = $stmt->fetch(PDO::FETCH_ASSOC);
 } catch (Exception $e) {
   error_log('Error fetching active coupon for promo modal: ' . $e->getMessage());
@@ -780,20 +779,23 @@ try {
         const applyBtn = document.getElementById('applyCouponNow');
         const copyBtn = document.getElementById('copyCouponCode');
         const codeText = document.getElementById('couponCodeValue');
-        const storageKey = 'coupon_promo_seen_at';
+        // Use coupon-aware storage key so a new code always shows even if a previous one was dismissed
+        const codeValue = codeText ? codeText.textContent.trim() : '';
+        const storageKey = `coupon_promo_seen_${codeValue || 'default'}`;
         const cooldownMs = 24 * 60 * 60 * 1000; // 24 hours
 
         const hideModal = () => {
-          modal.classList.remove('flex'); // Remove the display class
-          modal.classList.add('hidden'); // Add the hiding class
+          modal.classList.remove('flex');
+          modal.classList.add('hidden');
           localStorage.setItem(storageKey, Date.now().toString());
         };
 
         const showModal = () => {
           const lastSeen = parseInt(localStorage.getItem(storageKey) || '0', 10);
-          if (Date.now() - lastSeen < cooldownMs) return;
-          modal.classList.remove('hidden'); // Remove the hiding class
-          modal.classList.add('flex'); // Add the display class
+          // If coupon changed, show immediately; otherwise respect cooldown
+          if (lastSeen && Date.now() - lastSeen < cooldownMs) return;
+          modal.classList.remove('hidden');
+          modal.classList.add('flex');
         };
 
         // Show once per 24h, slight delay after load
